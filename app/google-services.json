@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "182738978260",
+    "project_id": "vkontaktech-a5a9e",
+    "storage_bucket": "vkontaktech-a5a9e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182738978260:android:e47f0994f461a1399bc241",
+        "android_client_info": {
+          "package_name": "com.example.vkontaktech"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZnKHarPKV-kr6kEBuHpnBbcgGKZUDIoY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
