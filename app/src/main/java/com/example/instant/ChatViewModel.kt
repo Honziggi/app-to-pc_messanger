@@ -1,4 +1,4 @@
-package com.example.vkontaktech
+package com.example.instant
 
 import androidx.compose.runtime.mutableStateListOf
 

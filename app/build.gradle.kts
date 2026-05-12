@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.vkontaktech"
+    namespace = "com.example.instant"
     compileSdk = 36
 
     defaultConfig {

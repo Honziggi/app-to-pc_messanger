@@ -1,4 +1,4 @@
-package com.example.vkontaktech
+package com.example.instant
 
 import android.os.Bundle
 import android.util.Log

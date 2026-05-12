@@ -1,4 +1,4 @@
-package com.example.vkontaktech.ui.theme
+package com.example.instant.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

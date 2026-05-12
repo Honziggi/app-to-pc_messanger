@@ -1,4 +1,4 @@
-package com.example.vkontaktech
+package com.example.instant
 
 import android.content.Context
 import android.util.Base64
