@@ -1,4 +1,4 @@
-package com.example.instant
+package com.example.apptopc
 
 import org.junit.Test
 

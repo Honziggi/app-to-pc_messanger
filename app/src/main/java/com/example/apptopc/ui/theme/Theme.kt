@@ -1,4 +1,4 @@
-package com.example.instant.ui.theme
+package com.example.apptopc.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

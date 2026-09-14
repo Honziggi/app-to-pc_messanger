@@ -1,4 +1,4 @@
-package com.example.instant
+package com.example.apptopc
 
 import android.os.Bundle
 import android.util.Log
@@ -15,11 +15,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import com.example.apptopc.data.AppDatabase
 import com.google.firebase.messaging.FirebaseMessaging
 
 class MainActivity : ComponentActivity() {
@@ -119,6 +122,10 @@ fun LoginScreen(onSuccess: () -> Unit) {
 
     }
 }
+@Composable
+fun CommandScreen(){
+TODO()
+}
 /*@Composable
 fun MessageBubble(text: String) {
     Surface (
@@ -135,9 +142,17 @@ fun MessageBubble(text: String) {
 
 @Composable
 fun ChatScreen() {
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val database = remember { AppDatabase.getDatabase(context) }
 
-    val messageList = ChatViewModel.messages
+    val messageList by database.chatDao().getAllMessages().collectAsState(initial = emptyList())
+    val listState = rememberLazyListState()
 
+    androidx.compose.runtime.LaunchedEffect(messageList.size) {
+        if (messageList.isNotEmpty()) {
+            listState.animateScrollToItem(messageList.size - 1)
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -150,14 +165,27 @@ fun ChatScreen() {
         Spacer(modifier = Modifier.height(16.dp))
 
         LazyColumn(
+            state = listState,
             modifier = Modifier.fillMaxSize()
         ) {
             items(messageList) { message ->
-                Text(
-                    text = message,
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(8.dp).background(Color.LightGray)
-                )
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 4.dp)
+                        .background(Color.LightGray)
+                        .padding(8.dp)
+                ) {
+                    Text(
+                        text = message.text,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                    Text(
+                        text = message.timestamp,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = Color.DarkGray
+                    )
+                }
             }
         }
     }

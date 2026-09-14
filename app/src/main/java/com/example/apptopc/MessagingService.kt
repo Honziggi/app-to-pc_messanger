@@ -1,4 +1,4 @@
-package com.example.instant
+package com.example.apptopc
 
 import android.content.Context
 import android.util.Base64
@@ -9,8 +9,15 @@ import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.spec.GCMParameterSpec
 import javax.crypto.spec.SecretKeySpec
+import androidx.core.content.edit
+import com.example.apptopc.data.AppDatabase
+import com.example.apptopc.data.ChatMessage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MessagingService: FirebaseMessagingService() {
+    @Deprecated("Deprecated in Java")
     override fun onNewToken(token: String) {
         Log.d("FCM", "Token received: $token")
     }
@@ -23,7 +30,9 @@ class MessagingService: FirebaseMessagingService() {
         val key = getOrGenerateKey(this)
         val decryptedBody = decrypt(encryptedBody, key)
 
-        ChatViewModel.addMessage(decryptedBody)
+        CoroutineScope(Dispatchers.IO).launch {
+            AppDatabase.insert(applicationContext, decryptedBody)
+        }
 
 
     }
@@ -48,7 +57,7 @@ class MessagingService: FirebaseMessagingService() {
 
     companion object {
         fun getOrGenerateKey(context: Context): String {
-            val pref = context.getSharedPreferences("security_pref", Context.MODE_PRIVATE)
+            val pref = context.getSharedPreferences("security_pref",MODE_PRIVATE)
             var key = pref.getString("terminal_key", null)
 
             if (key == null) {
@@ -57,7 +66,7 @@ class MessagingService: FirebaseMessagingService() {
                 val secretKey = keyGenerator.generateKey()
                 key = Base64.encodeToString(secretKey.encoded, Base64.NO_WRAP)
 
-                pref.edit().putString("terminal_key", key).apply()
+                pref.edit { putString("terminal_key", key) }
             }
             return key!!
         }

@@ -1,4 +1,4 @@
-package com.example.instant.ui.theme
+package com.example.apptopc.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
